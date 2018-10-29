@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour {
 
-    public bool Enemy;
-    public int DamageVal;
-    public GameObject Sparks;
-    public GameObject DamageValues;
-    public Transform ImpactPoint;
+    public bool enemy_check;
+    public int damage_val;
+    public GameObject sparks_object;
+    public GameObject damage_values;
+    public Transform impact_point;
 
 	// Use this for initialization
 	void Start () {
@@ -22,19 +22,19 @@ public class Damage : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D Target)
     {
-        if (!Enemy && Target.gameObject.tag == "BOT_Enemy")
+        if (!enemy_check && Target.gameObject.tag == "BOT_Enemy")
         {
-            Target.gameObject.GetComponent<Plating>().DamagePlating(DamageVal);
-            Instantiate(Sparks, ImpactPoint.position, ImpactPoint.rotation);
-            var clone = (GameObject) Instantiate(DamageValues, ImpactPoint.position, Quaternion.Euler(Vector3.zero));
-            clone.GetComponent<DamageValues>().Damage = DamageVal;
+            Target.gameObject.GetComponent<Plating>().DamagePlating(damage_val);
+            Instantiate(sparks_object, impact_point.position, impact_point.rotation);
+            var clone = (GameObject) Instantiate(damage_values, impact_point.position, Quaternion.Euler(Vector3.zero));
+            clone.GetComponent<DamageValues>().damage_value = damage_val;
         }
-        else if (Enemy && Target.gameObject.tag == "BOT_Player")
+        else if (enemy_check && Target.gameObject.tag == "BOT_Player")
         {   
-            Target.gameObject.GetComponent<Plating>().DamagePlating(DamageVal);
-            Instantiate(Sparks, ImpactPoint.position, ImpactPoint.rotation);
-            var clone = (GameObject)Instantiate(DamageValues, ImpactPoint.position, Quaternion.Euler(Vector3.zero));
-            clone.GetComponent<DamageValues>().Damage = DamageVal;
+            Target.gameObject.GetComponent<Plating>().DamagePlating(damage_val);
+            Instantiate(sparks_object, impact_point.position, impact_point.rotation);
+            var clone = (GameObject)Instantiate(damage_values, impact_point.position, Quaternion.Euler(Vector3.zero));
+            clone.GetComponent<DamageValues>().damage_value = damage_val;
         }
     }
 }

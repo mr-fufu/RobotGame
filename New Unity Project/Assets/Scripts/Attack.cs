@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 
-    public bool Melee = false;
-    public bool Projectile = false;
-    public bool Attacking = false;
-    public int AttackSpeed;
+    public bool melee_check = false;
+    public bool projectile_check = false;
+    public bool attacking_check = false;
+    public int attack_speed;
 
     private Animator Anim;
 
@@ -18,7 +18,7 @@ public class Attack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Melee == true )
+		if (melee_check == true )
         {
 
         }

@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
 
-    public string Destination;
+    public string load_destination;
 
     void OnMouseDown()
     {
-            SceneManager.LoadScene(Destination);
+            SceneManager.LoadScene(load_destination);
     }
 
 }

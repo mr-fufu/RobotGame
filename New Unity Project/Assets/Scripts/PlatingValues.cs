@@ -15,7 +15,7 @@ public class PlatingValues : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        bar_value.maxValue = plating_location.MaxPlating;
-        bar_value.value = plating_location.CurrentPlating;
+        bar_value.maxValue = plating_location.max_plating;
+        bar_value.value = plating_location.current_plating;
     }
 }

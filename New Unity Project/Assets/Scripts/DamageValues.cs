@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class DamageValues : MonoBehaviour {
 
-    public float RiseSpeed;
-    public int Damage;
-    public Text DisplayedNumber;
+    public float rise_speed;
+    public int damage_value;
+    public Text displayed_value;
     
 
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class DamageValues : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        DisplayedNumber.text = "-" + Damage;
-        transform.position = new Vector3(transform.position.x, transform.position.y + (RiseSpeed * Time.deltaTime), transform.position.z);
+        displayed_value.text = "-" + damage_value;
+        transform.position = new Vector3(transform.position.x, transform.position.y + (rise_speed * Time.deltaTime), transform.position.z);
 	}
 }

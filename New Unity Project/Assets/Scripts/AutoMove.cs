@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AutoMove : MonoBehaviour {
 
-    public Collider2D EngagedTarget;
+    public Collider2D engaged_target;
 
-    public float moveSpeed;
+    public float move_speed;
     private Animator Anim;
-    public bool Enemy;
-    private int MoveDir;
-    public bool Engaged = false;
+    public bool enemy_check;
+    private int move_dir;
+    public bool engaged_check = false;
     
     // Use this for initialization
     void Start () {
@@ -21,15 +21,15 @@ public class AutoMove : MonoBehaviour {
     void Update () {
 
         //Debug.Log(CollDist);
-        if (!Enemy && !Engaged)
+        if (!enemy_check && !engaged_check)
         {
             Anim.SetBool("Walk", true);
-            MoveDir = 1;
+            move_dir = 1;
         }
-        else if (Enemy && !Engaged)
+        else if (enemy_check && !engaged_check)
         {
             Anim.SetBool("Walk", true);
-            MoveDir = -1;
+            move_dir = -1;
         }
 
         if (
@@ -40,19 +40,19 @@ public class AutoMove : MonoBehaviour {
             Anim.GetCurrentAnimatorStateInfo(0).IsName("Move")
             )
         {
-            transform.Translate(new Vector3(moveSpeed * MoveDir, 0f, 0f));
+            transform.Translate(new Vector3(move_speed * move_dir, 0f, 0f));
         }
 
-        if (EngagedTarget == null)
+        if (engaged_target == null)
         {
-            EngagedTarget = gameObject.GetComponent<Collider2D>();
+            engaged_target = gameObject.GetComponent<Collider2D>();
         }
 
-        if (EngagedTarget != null && Engaged == true)
+        if (engaged_target != null && engaged_check == true)
         {
-            if (EngagedTarget.gameObject.GetComponent<Plating>().DestructionTrigger == true)
+            if (engaged_target.gameObject.GetComponent<Plating>().destruction_trigger == true)
             {
-                Engaged = false;
+                engaged_check = false;
             }
         }
         
@@ -65,16 +65,16 @@ public class AutoMove : MonoBehaviour {
         Vector3 OtherCenter = OtherCollider.gameObject.transform.position;
         Vector3 ObjectCenter = gameObject.transform.position;
 
-        if (!Enemy && OtherCenter.x > ObjectCenter.x)
+        if (!enemy_check && OtherCenter.x > ObjectCenter.x)
         {
-            EngagedTarget = OtherCollider;
-            Engaged = true;
+            engaged_target = OtherCollider;
+            engaged_check = true;
             Anim.SetBool("Walk", false);
         }
-        else if (Enemy && OtherCenter.x < ObjectCenter.x)
+        else if (enemy_check && OtherCenter.x < ObjectCenter.x)
         {
-            EngagedTarget = OtherCollider;
-            Engaged = true;
+            engaged_target = OtherCollider;
+            engaged_check = true;
             Anim.SetBool("Walk", false);
         }
     }
@@ -84,13 +84,13 @@ public class AutoMove : MonoBehaviour {
         Vector3 ExitObject = ExitCollider.gameObject.transform.position;
         Vector3 ObjectCenter = gameObject.transform.position;
 
-        if (Engaged && !Enemy && ExitObject.x > ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
+        if (engaged_check && !enemy_check && ExitObject.x > ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
         {
-            Engaged = false;
+            engaged_check = false;
         }
-        else if (Engaged && Enemy && ExitObject.x < ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
+        else if (engaged_check && enemy_check && ExitObject.x < ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
         {
-            Engaged = false;
+            engaged_check = false;
         }
     }
 }
