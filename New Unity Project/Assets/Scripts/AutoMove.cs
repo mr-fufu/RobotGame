@@ -8,13 +8,14 @@ public class AutoMove : MonoBehaviour {
 
     public float move_speed;
     private Animator Anim;
-    public bool enemy_check;
+    private bool enemy_check;
     private int move_dir;
     public bool engaged_check = false;
     
     // Use this for initialization
     void Start () {
         Anim = GetComponent<Animator>();
+        enemy_check = gameObject.GetComponent<StandardStatBlock>().ENEMY;
     }
 
     // Update is called once per frame
@@ -65,13 +66,13 @@ public class AutoMove : MonoBehaviour {
         Vector3 OtherCenter = OtherCollider.gameObject.transform.position;
         Vector3 ObjectCenter = gameObject.transform.position;
 
-        if (!enemy_check && OtherCenter.x > ObjectCenter.x)
+        if (!enemy_check && OtherCenter.x > ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Enemy"))
         {
             engaged_target = OtherCollider;
             engaged_check = true;
             Anim.SetBool("Walk", false);
         }
-        else if (enemy_check && OtherCenter.x < ObjectCenter.x)
+        else if (enemy_check && OtherCenter.x < ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Player"))
         {
             engaged_target = OtherCollider;
             engaged_check = true;

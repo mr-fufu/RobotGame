@@ -13,7 +13,6 @@ public class Plating : MonoBehaviour {
     void Start () {
         current_plating = max_plating;
         Instantiate(plating_bar, gameObject.transform);
-
     }
 
     // Update is called once per frame

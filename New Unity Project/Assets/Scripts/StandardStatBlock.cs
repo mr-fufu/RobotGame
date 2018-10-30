@@ -13,10 +13,11 @@ public class StandardStatBlock : MonoBehaviour {
     public int POWER;
     public int AGILITY;
     public int COST;
+    public bool ENEMY;
 
     // Use this for initialization
     void Start () {
-		
+		 
 	}
 	
 	// Update is called once per frame
