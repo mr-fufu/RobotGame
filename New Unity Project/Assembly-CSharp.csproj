@@ -61,7 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Attack.cs" />
     <Compile Include="Assets\Scripts\AutoMove.cs" />
     <Compile Include="Assets\Scripts\BotController.cs" />
     <Compile Include="Assets\Scripts\Damage.cs" />
@@ -69,6 +68,8 @@
     <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\Scripts\Plating.cs" />
     <Compile Include="Assets\Scripts\PlatingValues.cs" />
+    <Compile Include="Assets\Scripts\ProjectileAttack.cs" />
+    <Compile Include="Assets\Scripts\ProjectileDamage.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\SpawnController.cs" />
     <Compile Include="Assets\Scripts\StandardStatBlock.cs" />
