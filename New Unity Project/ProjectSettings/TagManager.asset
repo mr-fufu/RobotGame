@@ -9,6 +9,7 @@ TagManager:
   - ProjectileWeapon
   - BOT_Player
   - BOT_Enemy
+  - DraggableUIPart
   layers:
   - Default
   - TransparentFX
