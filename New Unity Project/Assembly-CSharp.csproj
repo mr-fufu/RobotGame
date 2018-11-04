@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Attack.cs" />
      <Compile Include="Assets\Scripts\AutoMove.cs" />
+     <Compile Include="Assets\Scripts\AutoMoveALT.cs" />
      <Compile Include="Assets\Scripts\BotController.cs" />
      <Compile Include="Assets\Scripts\Damage.cs" />
      <Compile Include="Assets\Scripts\DamageValues.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\Scripts\SceneLoader.cs" />
      <Compile Include="Assets\Scripts\SpawnController.cs" />
      <Compile Include="Assets\Scripts\StandardStatBlock.cs" />
+     <Compile Include="Assets\Scripts\UIPartDrag.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/monke/Desktop/RobotGame/New Unity Project/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
