@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\Damage.cs" />
     <Compile Include="Assets\Scripts\DamageValues.cs" />
     <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
+    <Compile Include="Assets\Scripts\DialController.cs" />
+    <Compile Include="Assets\Scripts\DialState.cs" />
     <Compile Include="Assets\Scripts\Plating.cs" />
     <Compile Include="Assets\Scripts\PlatingValues.cs" />
     <Compile Include="Assets\Scripts\ProjectileAttack.cs" />

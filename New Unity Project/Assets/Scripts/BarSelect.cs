@@ -6,13 +6,13 @@ public class BarSelect : MonoBehaviour {
 
     public int box_no;
     public int selected_box;
-    private SpriteRenderer boxSprite;
-    private Color selected_color = new Color(0, 1, 1);
+    private SpriteRenderer box_sprite;
+    private Color selected_color = new Color(0.8f, 1, 1);
     private Color unselected_color = new Color(255, 255, 255);
 
     void Start ()
     {
-        boxSprite = GetComponent<SpriteRenderer>();
+        box_sprite = GetComponent<SpriteRenderer>();
 	}
 
     void Update()
@@ -21,11 +21,11 @@ public class BarSelect : MonoBehaviour {
 
         if (selected_box == box_no)
         {
-            boxSprite.color = selected_color;
+            box_sprite.color = selected_color;
         }
         else
         {
-            boxSprite.color = unselected_color;
+            box_sprite.color = unselected_color;
         }
     }
 
