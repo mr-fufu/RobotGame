@@ -11,7 +11,6 @@ public class AutoMoveALT : MonoBehaviour {
     private bool enemy_check;
     private int move_dir;
     public bool engaged_check = false;
-    private bool collided = false;
 
     // Use this for initialization
     void Start () {
@@ -41,41 +40,27 @@ public class AutoMoveALT : MonoBehaviour {
         {
             Anim.SetBool("WalkState", true);
         }
-
-        //-------------------------------------------------------------------
-        // Skip bot forward at the end of the walk cycle
-
-        if (
-            Anim.GetCurrentAnimatorStateInfo(0).IsName("Skip") 
-            )
+        else if (engaged_check)
         {
-            transform.Translate(new Vector3(move_speed * move_dir * 68, 0f, 0f));
-        }
-
-        //-------------------------------------------------------------------
-        // Reset target if it has been destroyed
-
-        if (engaged_target == null)
-        {
-            engaged_target = gameObject.GetComponent<Collider2D>();
+            Anim.SetBool("WalkState", false);
         }
 
         //-------------------------------------------------------------------
         // Disengage if the target is destroyed (receive destruction trigger 
         // prior to destruction from plating script of engaged target)
+        // Also Resets target if it has been destroyed
 
         if (engaged_target != null && engaged_check == true)
         {
             if (engaged_target.gameObject.GetComponent<Plating>().destruction_trigger == true)
             {
+                engaged_target = gameObject.GetComponent<Collider2D>();
                 engaged_check = false;
-                collided = false;
             }
         }
-        
     }
 
-    void OnTriggerStay2D(Collider2D OtherCollider)
+    void OnTriggerEnter2D(Collider2D OtherCollider)
     {
         //Debug.Log("collisionDetected");
 
@@ -85,25 +70,22 @@ public class AutoMoveALT : MonoBehaviour {
         Vector3 OtherCenter = OtherCollider.gameObject.transform.position;
         Vector3 ObjectCenter = gameObject.transform.position;
 
-        if (!enemy_check && OtherCenter.x > ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Enemy") && !collided)
+        if (!enemy_check && OtherCenter.x > ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Enemy"))
         {
             engaged_target = OtherCollider;
             engaged_check = true;
             Anim.SetBool("WalkState", false);
-            collided = true;
         }
-        else if (enemy_check && OtherCenter.x < ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Player") && !collided)
+        else if (enemy_check && OtherCenter.x < ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Player"))
         {
             engaged_target = OtherCollider;
             engaged_check = true;
             Anim.SetBool("WalkState", false);
-            collided = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D ExitCollider)
     {
-
         // used for disengagement of bots exiting without being destroyed 
         // exit direction must agree with enemy_check
 
@@ -118,6 +100,13 @@ public class AutoMoveALT : MonoBehaviour {
         {
             engaged_check = false;
         }
+    }
+
+    // Called during WalkState animation in order to move forward
+
+    public void SkipMove()
+    {
+            transform.Translate(new Vector3(move_speed * move_dir * 8, 0f, 0f));
     }
 }
 

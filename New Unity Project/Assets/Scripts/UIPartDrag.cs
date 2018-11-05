@@ -9,7 +9,7 @@ public class UIPartDrag : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        init_position = gameObject.Transform;
+        init_position = gameObject.transform;
 	}
 	
     void Update()
