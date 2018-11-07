@@ -10,6 +10,7 @@ TagManager:
   - BOT_Player
   - BOT_Enemy
   - DraggableUIPart
+  - UIPartSlot
   layers:
   - Default
   - TransparentFX
