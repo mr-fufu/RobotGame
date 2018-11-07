@@ -7,7 +7,7 @@ public class BarSelect : MonoBehaviour {
     public int box_no;
     public int selected_box;
     private SpriteRenderer box_sprite;
-    private Color selected_color = new Color(0.8f, 1, 1);
+    private Color selected_color = new Color(0.5f, 1, 1);
     private Color unselected_color = new Color(255, 255, 255);
 
     void Start ()

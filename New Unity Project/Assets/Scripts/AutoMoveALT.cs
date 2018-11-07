@@ -6,16 +6,25 @@ public class AutoMoveALT : MonoBehaviour {
 
     public Collider2D engaged_target;
 
+    public float move_dist;
     public float move_speed;
     private Animator Anim;
     private bool enemy_check;
     private int move_dir;
     public bool engaged_check = false;
 
+    Collider2D[] check_colliders = new Collider2D[5];
+    ContactFilter2D collider_filter = new ContactFilter2D();
+
+
     // Use this for initialization
     void Start () {
+        collider_filter = collider_filter.NoFilter();
+
         Anim = GetComponent<Animator>();
         enemy_check = gameObject.GetComponent<StandardStatBlock>().ENEMY;
+
+        Anim.speed = move_speed;
     }
 
     // Update is called once per frame
@@ -58,25 +67,26 @@ public class AutoMoveALT : MonoBehaviour {
                 engaged_check = false;
             }
         }
+
     }
 
-    void OnTriggerEnter2D(Collider2D OtherCollider)
+    void OnTriggerStay2D(Collider2D OtherCollider)
     {
         //Debug.Log("collisionDetected");
 
         // If collided with another bot in front (positions based on x position value of object centers)
         // sets engaged to true and acquires engaged target
-        
+
         Vector3 OtherCenter = OtherCollider.gameObject.transform.position;
         Vector3 ObjectCenter = gameObject.transform.position;
 
-        if (!enemy_check && OtherCenter.x > ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Enemy"))
+        if (!enemy_check && OtherCenter.x > ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Enemy" || OtherCollider.gameObject.tag == "BOT_Player"))
         {
             engaged_target = OtherCollider;
             engaged_check = true;
             Anim.SetBool("WalkState", false);
         }
-        else if (enemy_check && OtherCenter.x < ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Player"))
+        else if (enemy_check && OtherCenter.x < ObjectCenter.x && (OtherCollider.gameObject.tag == "BOT_Player" || OtherCollider.gameObject.tag == "BOT_Enemy"))
         {
             engaged_target = OtherCollider;
             engaged_check = true;
@@ -86,19 +96,36 @@ public class AutoMoveALT : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D ExitCollider)
     {
-        // used for disengagement of bots exiting without being destroyed 
-        // exit direction must agree with enemy_check
+        //used for disengagement of bots exiting without being destroyed
+        //exit direction must agree with enemy_check
+
 
         Vector3 ExitObject = ExitCollider.gameObject.transform.position;
         Vector3 ObjectCenter = gameObject.transform.position;
 
-        if (engaged_check && !enemy_check && ExitObject.x > ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
+        Collider2D[] check_colliders = new Collider2D[5];
+
+        ContactFilter2D collider_filter = new ContactFilter2D();
+
+        collider_filter = collider_filter.NoFilter();
+
+        gameObject.GetComponent<Collider2D>().OverlapCollider(collider_filter, check_colliders);
+
+        if (gameObject.name == "CrawlerLegs")
         {
-            engaged_check = false;
+            Debug.Log(check_colliders[1].gameObject.name);
         }
-        else if (engaged_check && enemy_check && ExitObject.x < ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
+
+        if (check_colliders == null)
         {
-            engaged_check = false;
+            if (engaged_check && !enemy_check && ExitObject.x > ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
+            {
+                engaged_check = false;
+            }
+            else if (engaged_check && enemy_check && ExitObject.x < ObjectCenter.x && (ExitCollider.gameObject.tag == "BOT_Player" || ExitCollider.gameObject.tag == "BOT_Enemy"))
+            {
+                engaged_check = false;
+            }
         }
     }
 
@@ -106,7 +133,7 @@ public class AutoMoveALT : MonoBehaviour {
 
     public void SkipMove()
     {
-            transform.Translate(new Vector3(move_speed * move_dir * 8, 0f, 0f));
+            transform.Translate(new Vector3(move_dist * move_dir * 8, 0f, 0f));
     }
 }
 
