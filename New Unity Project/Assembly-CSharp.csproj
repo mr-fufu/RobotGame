@@ -69,12 +69,14 @@
     <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\Scripts\DialController.cs" />
     <Compile Include="Assets\Scripts\DialState.cs" />
+    <Compile Include="Assets\Scripts\PersistentManager.cs" />
     <Compile Include="Assets\Scripts\Plating.cs" />
     <Compile Include="Assets\Scripts\PlatingValues.cs" />
     <Compile Include="Assets\Scripts\ProjectileAttack.cs" />
     <Compile Include="Assets\Scripts\ProjectileDamage.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\StandardStatBlock.cs" />
+    <Compile Include="Assets\Scripts\UIElementDragger.cs" />
     <Compile Include="Assets\Scripts\UIPartCategoryPages.cs" />
     <Compile Include="Assets\Scripts\UIPartComponentType.cs" />
     <Compile Include="Assets\Scripts\WorkshopDrag.cs" />

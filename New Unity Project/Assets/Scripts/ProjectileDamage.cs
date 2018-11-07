@@ -30,7 +30,7 @@ public class ProjectileDamage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(new Vector3(projectile_speed, 0f, 0f));
+        transform.Translate(new Vector3(projectile_speed * move_dir, 0f, 0f));
         travel_dist++;
         if (travel_dist >= (50 + 50*travel_range))
         {

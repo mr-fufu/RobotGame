@@ -18,7 +18,9 @@ public class WorkshopDrag : MonoBehaviour {
     private Transform selected_object;
     private Image dragged_image;
 
-    List<RaycastResult> hit_objects = new List<RaycastResult>();
+    private GameObject hit_object;
+
+    //List<RaycastResult> hit_objects = new List<RaycastResult>();
 
 	// Use this for initialization
 	void Start () {
@@ -27,48 +29,97 @@ public class WorkshopDrag : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    selected_object = FindObjectsOnClick(drag_tag);
+
+        //    if(selected_object != null)
+        //    {
+        //        dragging = true;
+
+        //        selected_object.SetAsLastSibling();
+
+        //        selected_slot_type = selected_object.gameObject.GetComponent<UIPartComponentType>().part_type;
+
+        //        original_position = selected_object.position;
+        //        dragged_image = selected_object.GetComponent<Image>();
+        //        dragged_image.raycastTarget = false;
+        //    }
+        //}
+
+        //if (dragging)
+        //{
+        //    selected_object.position = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        //}
+
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    if (selected_object != null)
+        //    {
+
+        //        var placement = FindObjectsOnClick(slot_tag);
+
+        //        if (placement != null) 
+        //        {
+        //            placed_slot_type = placement.gameObject.GetComponent<UIPartComponentType>().slot_type;
+
+        //            if ( placed_slot_type == selected_slot_type)
+        //            {
+        //                Instantiate(selected_object.gameObject, placement.transform);
+        //                selected_object.position = original_position;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            selected_object.position = original_position;
+        //        }
+        //    }
+        //}
+
         if (Input.GetMouseButtonDown(0))
         {
-
-            selected_object = FindObjectsOnClick(drag_tag);
-
-            Debug.Log(selected_object);
-
-            if(selected_object != null)
+            if (!dragging)
             {
+                selected_object = FindObjectsOnClick(drag_tag);
 
-                Debug.Log("object Selected!");
-                dragging = true;
+                if (selected_object != null)
+                {
+                    dragging = true;
 
-                selected_object.SetAsLastSibling();
+                    selected_slot_type = selected_object.gameObject.GetComponent<UIPartComponentType>().part_type;
 
-                selected_slot_type = selected_object.gameObject.GetComponent<UIPartComponentType>().part_type;
+                    original_position = selected_object.position;
+                    selected_object.GetComponent<Collider2D>().enabled = false;
 
-                original_position = selected_object.position;
-                dragged_image = selected_object.GetComponent<Image>();
-                dragged_image.raycastTarget = false;
+                }
             }
+            
         }
 
         if (dragging)
         {
-            selected_object.position = Input.mousePosition;
+            selected_object.position = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+
             if (selected_object != null)
             {
 
                 var placement = FindObjectsOnClick(slot_tag);
 
-                if (placement != null) 
+                if (placement != null)
                 {
                     placed_slot_type = placement.gameObject.GetComponent<UIPartComponentType>().slot_type;
 
-                    if ( placed_slot_type == selected_slot_type)
+                    if (placed_slot_type == selected_slot_type)
                     {
-                        Instantiate(selected_object.gameObject, selected_object.position, selected_object.rotation);
+                        Instantiate(selected_object.gameObject, placement.position, placement.rotation);
+                        selected_object.position = original_position;
+                    }
+                    else
+                    {
                         selected_object.position = original_position;
                     }
                 }
@@ -77,34 +128,42 @@ public class WorkshopDrag : MonoBehaviour {
                     selected_object.position = original_position;
                 }
             }
+
+            else
+            {
+                selected_object.position = original_position;
+            }
+
+            selected_object.GetComponent<Collider2D>().enabled = true;
+            selected_object = null;
+            dragging = false;
         }
 
     }
 
     private Transform FindObjectsOnClick(string find_tag)
     {
-        var click_position = new PointerEventData(EventSystem.current);
+        var click_position = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
 
-        click_position.position = Input.mousePosition;
+        //click_position = Input.mousePosition;
 
-        Debug.Log(click_position.position);
+        RaycastHit2D ray_hit = (Physics2D.Raycast(click_position, Vector2.zero, Mathf.Infinity));
 
-        EventSystem.current.RaycastAll(click_position, hit_objects);
-
-        Debug.Log(hit_objects.First().gameObject.tag);
-
-        if (hit_objects.Count <= 0)
+        if (ray_hit.collider != null)
         {
-            return null;
-        }
-        else if (hit_objects.First().gameObject.tag == find_tag)
-        {
-            return hit_objects.First().gameObject.transform;
+            if (ray_hit.collider.gameObject.tag == find_tag)
+            {
+                return ray_hit.collider.gameObject.transform;
+            }
+            else
+            {
+                return null;
+            }
         }
         else
         {
             return null;
         }
-
     }
 }
+
