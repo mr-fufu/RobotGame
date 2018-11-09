@@ -76,6 +76,8 @@
     <Compile Include="Assets\Scripts\ProjectileDamage.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\SceneManagementScript.cs" />
+    <Compile Include="Assets\Scripts\ScoreCounter.cs" />
+    <Compile Include="Assets\Scripts\ScoringBlock.cs" />
     <Compile Include="Assets\Scripts\StandardStatBlock.cs" />
     <Compile Include="Assets\Scripts\UIElementDragger.cs" />
     <Compile Include="Assets\Scripts\UIPartCategoryPages.cs" />

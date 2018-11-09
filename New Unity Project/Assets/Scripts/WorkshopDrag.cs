@@ -19,6 +19,7 @@ public class WorkshopDrag : MonoBehaviour {
     private Image dragged_image;
 
     private GameObject hit_object;
+    private bool occupied;
 
     //List<RaycastResult> hit_objects = new List<RaycastResult>();
 
@@ -115,7 +116,17 @@ public class WorkshopDrag : MonoBehaviour {
 
                     if (placed_slot_type == selected_slot_type)
                     {
-                        Instantiate(selected_object.gameObject, placement.position, placement.rotation);
+                        foreach (Transform slot_containment in placement.transform)
+                        {
+                            GameObject.Destroy(slot_containment.gameObject);
+                        }
+
+                        var slot_component = Instantiate(selected_object.gameObject, placement.position, placement.rotation);
+
+                        slot_component.transform.parent = placement.transform;
+                        slot_component.name = placed_slot_type;
+                        slot_component.transform.localScale = placement.transform.localScale;
+
                         selected_object.position = original_position;
                     }
                     else
